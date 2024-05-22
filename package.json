@@ -10,11 +10,20 @@
   },
   "dependencies": {
     "@rollup/rollup-win32-x64-msvc": "^4.18.0",
-    "express": "^4.19.2",
+    "@tsconfig/node18": "^18.2.4",
+    "@types/less": "^3.0.6",
+    "@types/node": "^20.12.12",
+    "@vue/tsconfig": "^0.5.1",
+    "less": "^4.2.0",
+    "lodash": "^4.17.21",
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "prettier": "^2.8.8",
+    "typescript": "~5.0.4",
     "vite": "^5.2.0"
   }
 }
