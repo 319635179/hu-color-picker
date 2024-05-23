@@ -1,11 +1,17 @@
 <template>
   <div class="hu-color-picker"></div>
+  <ColorLine />
+  <ColorBlock color="green" />
+  <ColorCircle />
 </template>
 
 <script setup lang="ts">
 import { defineComponent, onMounted } from 'vue'
-import type { IHuColorPicker, IHuGradientColor } from '@/app/interface'
-import { catchError } from '@/app/error'
+import type { IHuColorPicker, IHuGradientColor } from './interface'
+import { catchError } from './error'
+import ColorLine from './line.vue'
+import ColorBlock from './block.vue'
+import ColorCircle from '@/app/circle.vue'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {
@@ -23,13 +29,3 @@ defineComponent({
   name: 'ColorPicker'
 })
 </script>
-
-<style scoped lang="less">
-.hu-color-picker {
-  position: relative;
-  width: 30px;
-  height: 30px;
-  border: 1px solid #706e6e;
-  border-radius: 5px;
-}
-</style>

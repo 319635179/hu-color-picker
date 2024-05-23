@@ -1,0 +1,21 @@
+
+:root {
+  --hu-input-size: 30px;
+  --hu-border-color: #706e6e;
+  --hu-border-hover-color: #2286dd;
+  --hu-border-radius: 5px;
+}
+
+.hu-color-picker {
+  position: relative;
+  width: var(--hu-input-size);
+  height: var(--hu-input-size);
+  border: 1px solid var(--hu-border-color);
+  border-radius: var(--hu-border-radius);
+  cursor: pointer;
+  box-sizing: border-box;
+
+  &:hover {
+    border: 1px solid var(--hu-border-hover-color);
+  }
+}

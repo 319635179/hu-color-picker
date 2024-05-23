@@ -4,5 +4,6 @@
  * @date 2024/5/22 下午7:38
  */
 import ColorPicker from './index.vue'
+import './index.less'
 
 export default ColorPicker
