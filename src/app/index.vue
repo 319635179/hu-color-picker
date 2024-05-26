@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, onMounted, type Ref, ref } from 'vue'
+import { defineComponent, onMounted, onUnmounted, type Ref, ref } from 'vue'
 import type { IHuColorPicker, IHuGradientColor } from './interface'
 import { propsError } from './error'
 import { COLOR_BASE, ID_PREFIX } from '@/app/constant'
@@ -59,6 +59,11 @@ const handleShowContainer = () => {
 onMounted(() => {
   propsError(props)
   el = document.getElementById(id)
+})
+
+onUnmounted(() => {
+  el = null
+  maskEl.value = null
 })
 
 defineComponent({

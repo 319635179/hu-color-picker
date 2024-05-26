@@ -48,6 +48,8 @@ onMounted(() => {
 onUnmounted(() => {
   // 销毁监听器
   document.removeEventListener('click', handleOutsideUnmount)
+  el = null
+  parentEl = null
 })
 </script>
 
