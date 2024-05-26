@@ -22,8 +22,10 @@ defineComponent({
 
 <style scoped>
 .hu-color-block {
+  display: inline-block;
   width: 180px;
   height: 150px;
-  background: linear-gradient(to top, #000, #0000), linear-gradient(to right, #fff, var(--hu-check-color, red));
+  background: linear-gradient(to top, #000, #0000),
+    linear-gradient(to right, #fff, var(--hu-check-color, red));
 }
 </style>

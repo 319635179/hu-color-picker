@@ -10,7 +10,9 @@
         :parentId="id"
         @unmount="handleUnmount"
         :rect="getRect()"
-      />
+      >
+        <Editor v-model="modelValue" />
+      </Popper>
     </Transition>
   </teleport>
 </template>
@@ -24,6 +26,7 @@ import { getGradientColor } from '@/app/options'
 import { getUniqueId } from '@/app/utils'
 import { usePopper } from '@/components/popper'
 import Popper from '@/components/popper.vue'
+import Editor from '@/app/editor.vue'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {

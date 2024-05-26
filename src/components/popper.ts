@@ -4,10 +4,8 @@ import './popper.less'
 const POPPER_ID = 'hu-color-popper'
 
 export const usePopper = () => {
-  let popper = document.getElementById(POPPER_ID)
-
   const initPopper = () => {
-    popper = document.getElementById(POPPER_ID)
+    let popper = document.getElementById(POPPER_ID)
     if (!popper) {
       popper = document.createElement('div')
       popper.id = POPPER_ID

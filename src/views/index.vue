@@ -7,7 +7,7 @@
 import { defineComponent, ref } from 'vue'
 import ColorPicker from '@/app/index'
 
-const data = ref('green')
+const data = ref('#fff')
 
 defineComponent({
   name: 'Home'

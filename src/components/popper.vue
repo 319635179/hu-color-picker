@@ -1,5 +1,7 @@
 <template>
-  <div :id class="hu-color-popper" :style="getStyle()"></div>
+  <div :id class="hu-color-container" :style="getStyle()">
+    <slot />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -67,10 +69,13 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
-.hu-color-popper {
+.hu-color-container {
   position: absolute;
-  width: 200px;
-  height: 200px;
-  background: #2286dd;
+  width: 220px;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px #d8d8d8 inset;
+  background: #fff;
+  padding: 10px 0;
 }
 </style>
