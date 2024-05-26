@@ -6,3 +6,5 @@
 
 // @ts-ignore
 export const SAFE_ENV = !!window.EyeDropper
+export const COLOR_BASE = 'red'
+export const ID_PREFIX = 'hu-color'

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 
 const props = defineProps<{
   color?: string

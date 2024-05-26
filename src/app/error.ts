@@ -5,8 +5,11 @@
  */
 import type { IHuColorPicker } from '@/app/interface'
 
-export const catchError = (props: IHuColorPicker) => {
-  const res = {
+export const propsError = (props: IHuColorPicker) => {
+  const res: {
+    type: 'success' | 'warn' | 'error',
+    message: string,
+  } = {
     type: 'success',
     message: ''
   }
@@ -14,7 +17,11 @@ export const catchError = (props: IHuColorPicker) => {
     res.type = 'warn'
     res.message = "can't use justGradient and convert"
   }
-  if(res.type === 'warn') {
-    console.warn('hu-color-picker:warn\n', res.message)
+  if(res.type !== 'success') {
+    commonError(res.type, res.message)
   }
+}
+
+export const commonError = (type: 'warn' | 'error', message: string) => {
+  console[type]?.(`hu-color-picker:${type}\n`, message)
 }

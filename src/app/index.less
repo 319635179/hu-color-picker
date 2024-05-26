@@ -1,9 +1,11 @@
 
 :root {
+  --hu-color-base: red;
   --hu-input-size: 30px;
   --hu-border-color: #706e6e;
   --hu-border-hover-color: #2286dd;
   --hu-border-radius: 5px;
+  --hu-padding: 3px;
 }
 
 .hu-color-picker {
@@ -14,6 +16,14 @@
   border-radius: var(--hu-border-radius);
   cursor: pointer;
   box-sizing: border-box;
+  padding: var(--hu-padding);
+
+  .hu-color-show {
+    width: 100%;
+    height: 100%;
+    border-radius: calc(var(--hu-border-radius) - 2px);
+    background: var(--hu-check-color, var(--hu-color-base));
+  }
 
   &:hover {
     border: 1px solid var(--hu-border-hover-color);
