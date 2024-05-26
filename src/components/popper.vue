@@ -1,18 +1,31 @@
 <template>
-  <div :id class="hu-color-container"></div>
+  <div :id class="hu-color-popper" :style="getStyle()"></div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
+import { commonError } from '@/app/error'
 
 const props = defineProps<{
   id: string
   parentId: string
+  rect?: DOMRect
 }>()
 const emits = defineEmits(['unmount'])
 
 let el: HTMLElement | null = null
 let parentEl: HTMLElement | null = null
+
+const getStyle = () => {
+  if (!props.rect) {
+    commonError('error', '找不到元素位置，请刷新后重试')
+    return {}
+  }
+  return {
+    top: `${props.rect.bottom + 8}px`,
+    left: `${props.rect.left}px`
+  }
+}
 
 const handleOutsideUnmount = (e: MouseEvent) => {
   if (!el || !parentEl) {
@@ -54,7 +67,8 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
-.hu-color-container {
+.hu-color-popper {
+  position: absolute;
   width: 200px;
   height: 200px;
   background: #2286dd;

@@ -1,5 +1,6 @@
 <template>
   <div><ColorPicker v-model="data" /></div>
+  <div><ColorPicker v-model="data" /></div>
 </template>
 
 <script setup lang="ts">

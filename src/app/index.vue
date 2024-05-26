@@ -1,9 +1,17 @@
 <template>
-  <div class="hu-color-picker" :id @click="handleShowContainer">
+  <div class="hu-color-picker" :id @click="handleShowPopper">
     <div class="hu-color-show" :style="getStyle()"></div>
   </div>
   <teleport v-if="maskEl" :to="maskEl">
-    <Container v-if="showContainer" :id="`container-${id}`" :parentId="id" @unmount="handleUnmount" />
+    <Transition name="hu-show">
+      <Popper
+        v-if="showPopper"
+        :id="`popper-${id}`"
+        :parentId="id"
+        @unmount="handleUnmount"
+        :rect="getRect()"
+      />
+    </Transition>
   </teleport>
 </template>
 
@@ -14,8 +22,8 @@ import { propsError } from './error'
 import { COLOR_BASE, ID_PREFIX } from '@/app/constant'
 import { getGradientColor } from '@/app/options'
 import { getUniqueId } from '@/app/utils'
-import { useContainer } from '@/components/container'
-import Container from '@/components/container.vue'
+import { usePopper } from '@/components/popper'
+import Popper from '@/components/popper.vue'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {
@@ -27,9 +35,9 @@ const props = defineProps<IHuColorPicker>()
 const id = getUniqueId(ID_PREFIX)
 let el: HTMLElement | null = null
 const maskEl: Ref<HTMLElement | null> = ref(null)
-const showContainer = ref(false)
+const showPopper = ref(false)
 
-const { mount, unmount } = useContainer()
+const { mount } = usePopper()
 
 const getStyle = () => {
   return {
@@ -40,17 +48,20 @@ const getStyle = () => {
   }
 }
 
+const getRect = () => {
+  return el?.getBoundingClientRect()
+}
+
 const handleUnmount = () => {
-  if(showContainer.value) {
-    unmount()
-    showContainer.value = false
+  if (showPopper.value) {
+    showPopper.value = false
   }
 }
 
-const handleShowContainer = () => {
-  if (!showContainer.value) {
+const handleShowPopper = () => {
+  if (!showPopper.value) {
     maskEl.value = mount(el)
-    showContainer.value = !!maskEl.value;
+    showPopper.value = !!maskEl.value
     return
   }
   handleUnmount()
@@ -59,6 +70,7 @@ const handleShowContainer = () => {
 onMounted(() => {
   propsError(props)
   el = document.getElementById(id)
+  maskEl.value = mount(el)
 })
 
 onUnmounted(() => {
@@ -70,3 +82,15 @@ defineComponent({
   name: 'ColorPicker'
 })
 </script>
+
+<style lang="less" scoped>
+.hu-show-enter-active,
+.hu-show-leave-active {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.hu-show-enter-from,
+.hu-show-leave-from {
+  transform: translateY(-30px);
+  opacity: 0;
+}
+</style>
