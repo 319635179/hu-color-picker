@@ -4,8 +4,8 @@
       <button @click="isGradient = false">单色</button>
     </header>
     <main class="hu-popper-body">
-      <Block />
-      <Line class="line" />
+      <BlockEditor />
+      <LineEditor class="line" />
     </main>
     <footer class="hu-popper-footer">
       <input class="hu-color-input" v-model="modelValue" />
@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import type { IHuGradientColor } from '@/app/interface'
 import { ref } from 'vue'
-import Block from '@/components/block.vue'
-import Line from '@/components/line.vue'
+import BlockEditor from '@/app/blockEditor.vue'
+import LineEditor from '@/app/lineEditor.vue'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {
