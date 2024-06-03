@@ -4,11 +4,12 @@
       <button @click="isGradient = false">单色</button>
     </header>
     <main class="hu-popper-body">
-      <BlockEditor />
-      <LineEditor class="line" />
+      <BlockEditor v-model:s="hsv.s" v-model:v="hsv.v" :h="hsv.h" />
+      <LineEditor class="line" v-model:h="hsv.h" />
     </main>
     <footer class="hu-popper-footer">
       <input class="hu-color-input" v-model="modelValue" />
+      {{hsv2rgb(hsv.h, hsv.s, hsv.v)}}
     </footer>
   </div>
 </template>
@@ -18,6 +19,7 @@ import type { IHuGradientColor } from '@/app/interface'
 import { ref } from 'vue'
 import BlockEditor from '@/app/blockEditor.vue'
 import LineEditor from '@/app/lineEditor.vue'
+import { hsv2rgb } from './color'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {
@@ -26,6 +28,12 @@ const modelValue = defineModel<string | IHuGradientColor>({
 })
 const isGradient = ref(false)
 const gradientType = ref('line')
+
+const hsv = ref({
+  s: 100,
+  v: 100,
+  h: 0
+})
 </script>
 
 <style scoped lang="less">

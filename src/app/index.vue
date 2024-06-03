@@ -36,8 +36,8 @@ const modelValue = defineModel<string | IHuGradientColor>({
 
 const props = defineProps<IHuColorPicker>()
 const id = getUniqueId(ID_PREFIX)
-let el: HTMLElement | null = null
-const maskEl: Ref<HTMLElement | null> = ref(null)
+let el: HTMLElement | null | undefined
+const maskEl: Ref<HTMLElement | null | undefined> = ref(undefined)
 const showPopper = ref(false)
 
 const { mount } = usePopper()

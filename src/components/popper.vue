@@ -1,5 +1,5 @@
 <template>
-  <div :id class="hu-color-container" :style="getStyle()">
+  <div :id class="hu-color-container" :style="getStyle()" @mousedown="handlePointDown">
     <slot />
   </div>
 </template>
@@ -15,8 +15,8 @@ const props = defineProps<{
 }>()
 const emits = defineEmits(['unmount'])
 
-let el: HTMLElement | null = null
-let parentEl: HTMLElement | null = null
+let el: HTMLElement | null | undefined
+let parentEl: HTMLElement | null| undefined
 
 const getStyle = () => {
   if (!props.rect) {
@@ -29,8 +29,17 @@ const getStyle = () => {
   }
 }
 
+let mouseDownInPopper = false
+const handlePointDown = () => {
+  mouseDownInPopper = true
+}
+
 const handleOutsideUnmount = (e: MouseEvent) => {
-  if (!el || !parentEl) {
+  if(mouseDownInPopper) {
+    mouseDownInPopper = false
+    return
+  }
+  if (!el || !parentEl || mouseDownInPopper) {
     emits('unmount')
     return
   }

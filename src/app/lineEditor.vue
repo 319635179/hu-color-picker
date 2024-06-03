@@ -1,19 +1,57 @@
 <template>
-  <div class="hu-block-editor">
+  <div class="hu-block-editor" @pointerdown="handleChange" @pointerup="handleStopChange" :id="id">
     <Line />
-    <div class="hu-dot"></div>
+    <div class="hu-dot" :style="getDotStyle()"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue'
-import type { IHuGradientColor } from '@/app/interface'
+import { defineComponent, onMounted, onUnmounted } from 'vue'
 import Line from '@/components/line.vue'
+import { getUniqueId, handleStartMove, handleStopMove } from '@/app/utils'
 
-const modelValue = defineModel<string | IHuGradientColor>({
-  set(val) {
-    return val
+const LINE_HEIGHT = 150
+
+const h = defineModel<number>('h', { default: 0 })
+
+const getDotStyle = () => {
+  return {
+    top: `calc(${(360 - h.value) / 3.6}% - 1px)`
   }
+}
+
+const id = getUniqueId()
+let el: HTMLElement | undefined | null
+const getHByEvent = (e: MouseEvent) => {
+  const rect = el?.getBoundingClientRect()
+  if (!rect) {
+    return
+  }
+  let hVal = ((LINE_HEIGHT - e.pageY + rect.top) * 360) / LINE_HEIGHT
+  hVal = Math.min(360, hVal)
+  hVal = Math.max(0, hVal)
+
+  h.value = hVal
+}
+
+const handleChange = (e: PointerEvent) => {
+  ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+  getHByEvent(e)
+  handleStartMove(e, (x, y, ev: PointerEvent) => {
+    getHByEvent(ev)
+  })
+}
+
+const handleStopChange = (e: PointerEvent) => {
+  ;(e.target as HTMLElement).releasePointerCapture(e.pointerId)
+  handleStopMove()
+}
+onMounted(() => {
+  el = document.getElementById(id)
+})
+
+onUnmounted(() => {
+  el = null
 })
 
 defineComponent({
@@ -25,6 +63,8 @@ defineComponent({
 .hu-block-editor {
   display: inline-block;
   position: relative;
+  width: 12px;
+  height: 150px;
 
   .hu-dot {
     position: absolute;

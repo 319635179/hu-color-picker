@@ -16,7 +16,7 @@ export const usePopper = () => {
     return popper
   }
 
-  const mount = (el: HTMLElement | null) => {
+  const mount = (el?: HTMLElement | null) => {
     if (!el) {
       commonError('error', '元素初始化失败')
       return null
