@@ -9,7 +9,9 @@
     </main>
     <footer class="hu-popper-footer">
       <input class="hu-color-input" v-model="modelValue" />
-      {{hsv2rgb(hsv.h, hsv.s, hsv.v)}}
+      {{hsv2rgb(hsv.h, hsv.s, hsv.v)}}<br />
+      {{rgb2hsv(hsv2rgb(hsv.h, hsv.s, hsv.v).r, hsv2rgb(hsv.h, hsv.s, hsv.v).g, hsv2rgb(hsv.h, hsv.s, hsv.v).b)}} <br />
+      {{hsv}}
     </footer>
   </div>
 </template>
@@ -19,7 +21,7 @@ import type { IHuGradientColor } from '@/app/interface'
 import { ref } from 'vue'
 import BlockEditor from '@/app/blockEditor.vue'
 import LineEditor from '@/app/lineEditor.vue'
-import { hsv2rgb } from './color'
+import { hsv2rgb, rgb2hsv } from './color'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {
