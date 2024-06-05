@@ -21,7 +21,7 @@ import type { IHuGradientColor } from '@/app/interface'
 import { ref } from 'vue'
 import BlockEditor from '@/app/blockEditor.vue'
 import LineEditor from '@/app/lineEditor.vue'
-import { hsv2rgb, rgb2hsv } from './color'
+import { hsv2rgb, rgb2hsv, str2rgba } from './color'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {
@@ -30,7 +30,9 @@ const modelValue = defineModel<string | IHuGradientColor>({
 })
 const isGradient = ref(false)
 const gradientType = ref('line')
-
+console.log(str2rgba('rgba(121, 121,123, 14)'))
+console.log(str2rgba('rgb(121, 121,123)'))
+console.log(str2rgba('#a1a1aa'))
 const hsv = ref({
   s: 100,
   v: 100,
