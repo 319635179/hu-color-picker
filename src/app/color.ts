@@ -125,6 +125,9 @@ export const rgbStr2rgb = (str: string) => {
 }
 export const hexStr2rgb = (str: string) => {
   str = str.slice(1)
+  if(!str.match(/^[A-Za-z0-9]+$/)) {
+    return strError()
+  }
   switch (str.length) {
     case 3:
     case 4:
