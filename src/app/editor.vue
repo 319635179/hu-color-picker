@@ -18,7 +18,7 @@ import type { IHuGradientColor } from '@/app/interface'
 import { onMounted, ref, watch } from 'vue'
 import BlockEditor from '@/app/blockEditor.vue'
 import LineEditor from '@/app/lineEditor.vue'
-import { hsv2rgb, rgb2hex } from './color'
+import { hexStr2rgb, hsv2rgb, rgb2hex, rgb2hsv } from './color'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {
@@ -30,15 +30,54 @@ const hsv = ref({
   v: 100,
   h: 0
 })
+const a = ref(100)
 const isGradient = ref(false)
 const gradientType = ref('line')
 
-onMounted(() => {
-  watch(hsv, (val) => {
-    const rgb = hsv2rgb(val.h, val.s, val.v)
-    modelValue.value = rgb2hex(rgb.r, rgb.g, rgb.b, 100)
-  }, {deep: true})
+const setHsv = () => {
+  console.log(
+    typeof modelValue.value === 'string' && [4, 5, 7, 9].includes(modelValue.value.length),
+    hsv.value
+  )
+  if (typeof modelValue.value === 'string' && [4, 5, 7, 9].includes(modelValue.value.length)) {
+    const rgb = hexStr2rgb(modelValue.value)
+    hsv.value = rgb2hsv(rgb.r, rgb.g, rgb.b)
+    a.value = rgb.a
+  }
+}
 
+const hasChangeByHsv = ref(false)
+const hasChangeByData = ref(false)
+
+onMounted(() => {
+  watch(
+    hsv,
+    (val) => {
+      if (!hasChangeByData.value) {
+        const rgb = hsv2rgb(val.h, val.s, val.v)
+        modelValue.value = rgb2hex(rgb.r, rgb.g, rgb.b, 100)
+        hasChangeByHsv.value = true
+      } else {
+        hasChangeByData.value = false
+      }
+    },
+    { deep: true }
+  )
+
+  watch(
+    modelValue,
+    () => {
+      if (!hasChangeByHsv.value) {
+        setHsv()
+        hasChangeByData.value = true
+      } else {
+        hasChangeByHsv.value = false
+      }
+    },
+    {
+      immediate: true
+    }
+  )
 })
 </script>
 
