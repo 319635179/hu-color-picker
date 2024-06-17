@@ -38,3 +38,11 @@ export const handleStopMove = () => {
   clearTimeout(moveTimer.value)
   document.onpointermove = null
 }
+
+export const getStringByLength = (str: string, len: number) => {
+  const l = str.length
+  if(l >= len) {
+    return str
+  }
+  return new Array(len - l + 1).join('0') + str
+}

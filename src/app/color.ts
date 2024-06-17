@@ -4,6 +4,7 @@
  * @date 2024/6/3 下午7:58
  */
 import { commonError } from '@/app/error'
+import { getStringByLength } from '@/app/utils'
 
 export const hsv2rgb = (h: number, s: number, v: number) => {
   h = Math.floor(h) % 360
@@ -159,4 +160,13 @@ export const str2rgba = (str: string) => {
   if(str[0] === '#') {
     return hexStr2rgb(str)
   }
+}
+
+const get16StrBy10 = (val: number) => {
+  return getStringByLength((Math.floor(val)).toString(16), 2)
+}
+
+export const rgb2hex = (r: number, g: number, b: number, a?: number) => {
+  a = a === undefined ? 100 : a
+  return `#${get16StrBy10(r)}${get16StrBy10(g)}${get16StrBy10(b)}${a === 100 ? '' : get16StrBy10(a)}`
 }

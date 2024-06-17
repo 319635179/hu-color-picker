@@ -6,9 +6,10 @@
 <script setup lang="ts">
 import { defineComponent, ref } from 'vue'
 import ColorPicker from '@/app/index'
+import { getStringByLength } from '@/app/utils'
 
-const data = ref('#fff')
-
+const data = ref('#aaa')
+console.log(getStringByLength('1', 2))
 defineComponent({
   name: 'Home'
 })

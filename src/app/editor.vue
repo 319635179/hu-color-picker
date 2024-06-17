@@ -9,34 +9,36 @@
     </main>
     <footer class="hu-popper-footer">
       <input class="hu-color-input" v-model="modelValue" />
-      {{hsv2rgb(hsv.h, hsv.s, hsv.v)}}<br />
-      {{rgb2hsv(hsv2rgb(hsv.h, hsv.s, hsv.v).r, hsv2rgb(hsv.h, hsv.s, hsv.v).g, hsv2rgb(hsv.h, hsv.s, hsv.v).b)}} <br />
-      {{hsv}}
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { IHuGradientColor } from '@/app/interface'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import BlockEditor from '@/app/blockEditor.vue'
 import LineEditor from '@/app/lineEditor.vue'
-import { hsv2rgb, rgb2hsv, str2rgba } from './color'
+import { hsv2rgb, rgb2hex } from './color'
 
 const modelValue = defineModel<string | IHuGradientColor>({
   set(val) {
     return val
   }
 })
-const isGradient = ref(false)
-const gradientType = ref('line')
-console.log(str2rgba('rgba(121, 121,123, 14)'))
-console.log(str2rgba('rgb(121, 121,123)'))
-console.log(str2rgba('#a1a1aa'))
 const hsv = ref({
   s: 100,
   v: 100,
   h: 0
+})
+const isGradient = ref(false)
+const gradientType = ref('line')
+
+onMounted(() => {
+  watch(hsv, (val) => {
+    const rgb = hsv2rgb(val.h, val.s, val.v)
+    modelValue.value = rgb2hex(rgb.r, rgb.g, rgb.b, 100)
+  }, {deep: true})
+
 })
 </script>
 
